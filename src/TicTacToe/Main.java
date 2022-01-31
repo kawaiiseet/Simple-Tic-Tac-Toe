@@ -12,7 +12,7 @@ public class Main {
         boolean running = true;
         StringBuilder cells = new StringBuilder();
         cells.append("_________");
-
+int a;
         printCells(cells);
 
         while (running) {
