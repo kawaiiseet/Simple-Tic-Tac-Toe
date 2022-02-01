@@ -5,40 +5,36 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        int countX = 0;
-        int countO = 0;
-        int index, turns = 0;
-        char playerChar;
-        boolean running = true;
+        final String newCells = "_________";
         StringBuilder cells = new StringBuilder();
-        cells.append("_________");
-int a;
+        cells.append(newCells);
         printCells(cells);
 
-        while (running) {
+        gameProcess(cells);
 
+    }
+
+    static void gameProcess(StringBuilder cells) {
+        int turns = 0;
+        int index;
+        char playerChar;
+        boolean running = true;
+        final int maxNumberOfTurns = 9;
+        while (running) {
             index = userInput(cells);
             turns++;
-
-            if (turns % 2 == 1) {
-                playerChar = 'X';
-                countX++;
-            }
-            else {
+            if (turns % 2 == 0) {
                 playerChar = 'O';
-                countO++;
+            } else {
+                playerChar = 'X';
             }
-
             cells.setCharAt(index, playerChar);
-
             printCells(cells);
-
-            running = checkTheResult(cells, turns);
+            running = checkTheResult(cells, turns, maxNumberOfTurns);
         }
     }
 
-
-    static boolean checkTheResult(StringBuilder cells, int turns) {
+    static boolean checkTheResult(StringBuilder cells, Integer turns, int maxNumberOfTurns) {
         for (int i = 0; i < 7; i++) {
             StringBuilder str = new StringBuilder();
             switch (i) {
@@ -67,15 +63,15 @@ int a;
                     str.append(cells.charAt(6)).append(cells.charAt(7)).append(cells.charAt(8));
                     break;
             }
-            if (str.toString().equals("OOO")) {
+            if ("OOO".equals(str.toString())) {
                 System.out.println("O wins");
                 return false;
-            } else if (str.toString().equals("XXX")) {
+            } else if ("XXX".equals(str.toString())) {
                 System.out.println("X wins");
                 return false;
             }
         }
-        if (turns >= 9) {
+        if (turns >= maxNumberOfTurns) {
             System.out.println("Draw");
             return false;
         }
@@ -84,9 +80,9 @@ int a;
 
     static void printCells(StringBuilder cells) {
         System.out.println("---------");
-        System.out.println("| " + cells.charAt(0) + " " + cells.charAt(1) + " " + cells.charAt(2) + " |");
-        System.out.println("| " + cells.charAt(3) + " " + cells.charAt(4) + " " + cells.charAt(5) + " |");
-        System.out.println("| " + cells.charAt(6) + " " + cells.charAt(7) + " " + cells.charAt(8) + " |");
+        System.out.printf("| %c %c %c |%n", cells.charAt(0), cells.charAt(1), cells.charAt(2));
+        System.out.printf("| %c %c %c |%n", cells.charAt(3), cells.charAt(4), cells.charAt(5));
+        System.out.printf("| %c %c %c |%n", cells.charAt(6), cells.charAt(7), cells.charAt(8));
         System.out.println("---------");
     }
 
